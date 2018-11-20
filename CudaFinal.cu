@@ -15,7 +15,7 @@ __global__ void convert_to_hsv(unsigned char *src, float *hsv, int width, int he
 
 	ren = blockIdx.x;
 	col = threadIdx.x;
-
+	
 	r = src[(ren * step) + (col * channels) + RED] / 255.0f;
 	g = src[(ren * step) + (col * channels) + GREEN] / 255.0f;
 	b = src[(ren * step) + (col * channels) + BLUE] / 255.0f;
@@ -121,7 +121,7 @@ __global__ void convert_to_rgb(float *hsv, unsigned char *dest, int width, int h
 int main(int argc, char* argv[]) {
 	int size, step, size2;
 	//int i;
-	double acum; 
+	//double acum; 
 	float *dev_hsv;
 	unsigned char *dev_src ,*dev_dest;
 	
@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
 	
 	cudaMemcpy(dev_src, src->imageData, size, cudaMemcpyHostToDevice);
 	
-	acum = 0;
+	//acum = 0;
 	step = src->widthStep / sizeof(uchar);
 	printf("Starting...\n");
 
@@ -164,13 +164,13 @@ int main(int argc, char* argv[]) {
 	cudaFree(dev_hsv);
 	cudaFree(dev_src);
 	
-	printf("avg time = %.5lf ms\n", (acum / N));
+	//printf("avg time = %.5lf ms\n", (acum / N));
 	
-	cvShowImage("Lenna (Original)", src);
-	cvShowImage("Lenna (Final)", dest);
+	cvShowImage("Image (Original)", src);
+	cvShowImage("Image (Final)", dest);
 	cvWaitKey(0);
-	cvDestroyWindow("Lenna (Original)");
-	cvDestroyWindow("Lenna (Final)");
+	cvDestroyWindow("Image (Original)");
+	cvDestroyWindow("Image (Final)");
 
 	return 0;
 }
